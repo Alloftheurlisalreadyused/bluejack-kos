@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 
 import java.text.DecimalFormat;
@@ -86,11 +87,11 @@ public class KostDetailActivity extends AppCompatActivity {
             formatRp.setGroupingSeparator('.');
             kursIndonesia.setDecimalFormatSymbols(formatRp);
 
-            kostImage.setImageResource(currentKost.getKostImage());
+            Glide.with(this).load(currentKost.getKostImage()).into(kostImage);
             kostName.setText(currentKost.getKostName());
             kostFacility.setText(currentKost.getKostFacility());
             kostPrice.setText(kursIndonesia.format(currentKost.getKostPrice()));
-            kostDescription.setText(currentKost.getKostDescription());
+            kostDescription.setText(currentKost.getKostAddress());
             kostLat.setText("Latitude: " + currentKost.getKostLatitude());
             kostLon.setText("Longitude: " + currentKost.getKostLongitude());
 

@@ -1,32 +1,28 @@
 package id.stanley.binus.bluejackkos.models;
 
-import android.graphics.drawable.Drawable;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-
-import java.util.ArrayList;
-import java.util.stream.Stream;
-
 public class KostModel {
     private int kostId;
     private String kostName;
     private String kostFacility;
     private int kostPrice;
-    private String kostDescription;
+    private String kostAddress;
     private double kostLongitude;
     private double kostLatitude;
-    private int kostImage;
+    private String kostImage;
 
-    public KostModel(int kostId, String kostName, String kostFacility, int kostPrice, String kostDescription, double kostLongitude, double kostLatitude, int kostImage) {
+    public KostModel(int kostId, String kostName, String kostFacility, int kostPrice, String kostAddress, double kostLongitude, double kostLatitude, String kostImage) {
         this.kostId = kostId;
         this.kostName = kostName;
         this.kostFacility = kostFacility;
         this.kostPrice = kostPrice;
-        this.kostDescription = kostDescription;
+        this.kostAddress = kostAddress;
         this.kostLongitude = kostLongitude;
         this.kostLatitude = kostLatitude;
         this.kostImage = kostImage;
+    }
+
+    public KostModel() {
+
     }
 
     public int getKostId() {
@@ -61,12 +57,12 @@ public class KostModel {
         this.kostPrice = kostPrice;
     }
 
-    public String getKostDescription() {
-        return kostDescription;
+    public String getKostAddress() {
+        return kostAddress;
     }
 
-    public void setKostDescription(String kostDescription) {
-        this.kostDescription = kostDescription;
+    public void setKostAddress(String kostAddress) {
+        this.kostAddress = kostAddress;
     }
 
     public double getKostLongitude() {
@@ -85,11 +81,11 @@ public class KostModel {
         this.kostLatitude = kostLatitude;
     }
 
-    public int getKostImage() {
+    public String getKostImage() {
         return kostImage;
     }
 
-    public void setKostImage(int kostImage) {
+    public void setKostImage(String kostImage) {
         this.kostImage = kostImage;
     }
 }
