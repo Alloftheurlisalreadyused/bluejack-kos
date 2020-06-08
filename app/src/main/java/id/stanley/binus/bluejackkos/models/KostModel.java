@@ -1,5 +1,6 @@
 package id.stanley.binus.bluejackkos.models;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
 
@@ -16,9 +17,9 @@ public class KostModel {
     private String kostDescription;
     private double kostLongitude;
     private double kostLatitude;
-    private int kostImage;
+    private Bitmap kostImage;
 
-    public KostModel(int kostId, String kostName, String kostFacility, int kostPrice, String kostDescription, double kostLongitude, double kostLatitude, int kostImage) {
+    public KostModel(int kostId, String kostName, String kostFacility, int kostPrice, String kostDescription, double kostLongitude, double kostLatitude, Bitmap kostImage) {
         this.kostId = kostId;
         this.kostName = kostName;
         this.kostFacility = kostFacility;
@@ -85,11 +86,11 @@ public class KostModel {
         this.kostLatitude = kostLatitude;
     }
 
-    public int getKostImage() {
+    public Bitmap getKostImage() {
         return kostImage;
     }
 
-    public void setKostImage(int kostImage) {
+    public void setKostImage(Bitmap kostImage) {
         this.kostImage = kostImage;
     }
 }

@@ -86,7 +86,7 @@ public class KostDetailActivity extends AppCompatActivity {
             formatRp.setGroupingSeparator('.');
             kursIndonesia.setDecimalFormatSymbols(formatRp);
 
-            kostImage.setImageResource(currentKost.getKostImage());
+            kostImage.setImageBitmap(currentKost.getKostImage());
             kostName.setText(currentKost.getKostName());
             kostFacility.setText(currentKost.getKostFacility());
             kostPrice.setText(kursIndonesia.format(currentKost.getKostPrice()));

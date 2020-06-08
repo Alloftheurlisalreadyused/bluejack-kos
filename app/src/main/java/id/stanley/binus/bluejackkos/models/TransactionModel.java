@@ -1,5 +1,7 @@
 package id.stanley.binus.bluejackkos.models;
 
+import android.graphics.Bitmap;
+
 public class TransactionModel {
     private String bookingId;
     private String userId;
@@ -68,7 +70,7 @@ public class TransactionModel {
         this.bookingDate = bookingDate;
     }
 
-    public TransactionModel(String bookingId, String userId, String kostName, String kostFacility, int kostPrice, double kostLat, double kostLon, String bookingDate, int kostImage) {
+    public TransactionModel(String bookingId, String userId, String kostName, String kostFacility, int kostPrice, double kostLat, double kostLon, String bookingDate, Bitmap kostImage) {
         this.bookingId = bookingId;
         this.userId = userId;
         this.kostName = kostName;
@@ -86,13 +88,13 @@ public class TransactionModel {
     private double kostLat;
     private double kostLon;
     private String bookingDate;
-    private int kostImage;
+    private Bitmap kostImage;
 
-    public int getKostImage() {
+    public Bitmap getKostImage() {
         return kostImage;
     }
 
-    public void setKostImage(int kostImage) {
+    public void setKostImage(Bitmap kostImage) {
         this.kostImage = kostImage;
     }
 }

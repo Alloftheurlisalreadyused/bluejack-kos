@@ -1,6 +1,7 @@
 package id.stanley.binus.bluejackkos.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class KostRecyclerViewAdapter extends RecyclerView.Adapter<KostRecyclerVi
         String kostName = mKostData.get(position).getKostName();
         int kostPrice = mKostData.get(position).getKostPrice();
         String kostFacilities = mKostData.get(position).getKostFacility();
-        int kostImage = mKostData.get(position).getKostImage();
+        Bitmap kostImage = mKostData.get(position).getKostImage();
 
         DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
@@ -58,7 +59,7 @@ public class KostRecyclerViewAdapter extends RecyclerView.Adapter<KostRecyclerVi
         holder.kostName.setText(kostName);
         holder.kostFacility.setText(kostFacilities);
         holder.kostPrice.setText(kursIndonesia.format(kostPrice));
-        holder.kostImage.setImageResource(kostImage);
+        holder.kostImage.setImageBitmap(kostImage);
     }
 
     // total number of rows
