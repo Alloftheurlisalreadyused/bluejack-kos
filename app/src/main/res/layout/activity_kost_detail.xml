@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".views.KostDetailActivity">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mapButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/buttonBook2"
+        android:text="@string/view_location_kost" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonBook2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/book_this_kost" />
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"

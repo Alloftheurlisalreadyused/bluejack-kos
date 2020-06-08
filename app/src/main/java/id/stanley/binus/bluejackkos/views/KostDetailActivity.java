@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class KostDetailActivity extends AppCompatActivity {
     private TextView kostLat;
     private TextView kostLon;
     private MaterialButton bookButton;
+    private MaterialButton mapButton;
     private Toolbar toolbar;
     private TextView toolbarTitle;
     private String userId;
@@ -49,12 +51,20 @@ public class KostDetailActivity extends AppCompatActivity {
         kostLat = findViewById(R.id.kostLatitude);
         kostLon = findViewById(R.id.kostLongitude);
         bookButton = findViewById(R.id.buttonBook);
+        mapButton = findViewById(R.id.mapButton);
         toolbarTitle = findViewById(R.id.titleText);
         toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(KostDetailActivity.this,MapsActivity.class));
+            }
+        });
         
         Intent intent = getIntent();
         
