@@ -1,12 +1,5 @@
 package id.stanley.binus.bluejackkos.views;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -17,10 +10,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -38,7 +36,7 @@ import id.stanley.binus.bluejackkos.adapters.KostRecyclerViewAdapter;
 import id.stanley.binus.bluejackkos.models.KostModel;
 import id.stanley.binus.bluejackkos.utils.DataStore;
 
-public class MainActivity extends AppCompatActivity implements KostRecyclerViewAdapter.ItemClickListener{
+public class MainActivity extends AppCompatActivity implements KostRecyclerViewAdapter.ItemClickListener {
 
     private DataStore dataStore = DataStore.getInstance();
     private KostRecyclerViewAdapter adapter;
@@ -125,9 +123,9 @@ public class MainActivity extends AppCompatActivity implements KostRecyclerViewA
                     dataStore.setKostArrayList(kostArrayList);
 
                 }, error -> {
-                    Log.e("MainActivity", "Error " + error);
+            Log.e("MainActivity", "Error " + error);
 
-                });
+        });
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);

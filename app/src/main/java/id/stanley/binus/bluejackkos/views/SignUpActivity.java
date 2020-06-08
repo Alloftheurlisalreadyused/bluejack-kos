@@ -23,6 +23,7 @@ import java.util.Calendar;
 import id.stanley.binus.bluejackkos.R;
 import id.stanley.binus.bluejackkos.models.UserModel;
 import id.stanley.binus.bluejackkos.utils.DataStore;
+import id.stanley.binus.bluejackkos.utils.SendSMS;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -91,6 +92,9 @@ public class SignUpActivity extends AppCompatActivity {
                 usersArrayList.add(userModel);
 
                 dataStore.setUsersArrayList(usersArrayList);
+
+                SendSMS sendSMS = new SendSMS();
+                sendSMS.SendSMS(this, "+62"+ phone.substring(1));
 
                 Toast.makeText(this, getString(R.string.sign_up_successful), Toast.LENGTH_LONG).show();
 
@@ -182,6 +186,12 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (phone.isEmpty()) {
             phoneTextField.setError(getString(R.string.must_be_filled));
+            phoneTextField.requestFocus();
+            valid = false;
+        }
+
+        if (phone.length()+1 < 10 || phone.length()+1 > 12) {
+            phoneTextField.setError(getString(R.string.phone_length_error));
             phoneTextField.requestFocus();
             valid = false;
         }
