@@ -143,7 +143,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         // check username requirement
-        if (username.length()+1 < 3 || username.length()+1 > 25) {
+        if (username.length() < 3 || username.length() > 25) {
             usernameTextField.setError(getString(R.string.username_requirement_not_met));
             usernameTextField.requestFocus();
             valid = false;
@@ -190,7 +190,7 @@ public class SignUpActivity extends AppCompatActivity {
             valid = false;
         }
 
-        if (phone.length()+1 < 10 || phone.length()+1 > 12) {
+        if (phone.length() < 10 || phone.length() > 12) {
             phoneTextField.setError(getString(R.string.phone_length_error));
             phoneTextField.requestFocus();
             valid = false;
