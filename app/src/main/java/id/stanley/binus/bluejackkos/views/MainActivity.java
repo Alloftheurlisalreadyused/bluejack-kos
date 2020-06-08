@@ -14,6 +14,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import id.stanley.binus.bluejackkos.R;
@@ -27,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements KostRecyclerViewA
     private KostRecyclerViewAdapter adapter;
     private Toolbar toolbar;
     private String userId;
+    private String API_URL = "https://raw.githubusercontent.com/dnzrx/SLC-REPO/master/MOBI6006/E202-MOBI6006-KR01-00.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,35 +58,77 @@ public class MainActivity extends AppCompatActivity implements KostRecyclerViewA
             finish();
         }
 
-        ArrayList<KostModel> kostArrayList = dataStore.getKostArrayList();
+        // fetch data from API
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
 
-        // remove data
-        kostArrayList.clear();
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, API_URL,
+                response -> {
+                    Log.d("MainActivity", response);
+
+                    ArrayList<KostModel> kostArrayList = dataStore.getKostArrayList();
+
+                    // remove data
+                    kostArrayList.clear();
+
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+
+                        for (int x = 0; x < jsonArray.length(); ++x) {
+                            JSONObject kostObject = jsonArray.getJSONObject(x);
+
+                            KostModel kost = new KostModel(
+                                    kostObject.getInt("id"),
+                                    kostObject.getString("name"),
+                                    kostObject.getString("facilities"),
+                                    kostObject.getInt("price"),
+                                    kostObject.getString("address"),
+                                    kostObject.getDouble("LNG"),
+                                    kostObject.getDouble("LAT"),
+                                    R.drawable.kost2);
+
+                            kostArrayList.add(kost);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    // set ArrayList to RecyclerView
+                    dataStore.setKostArrayList(kostArrayList);
+
+                }, error -> {
+                    Log.e("MainActivity", "Error " + error);
+
+                });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
 
         // insert data
-        kostArrayList.add(new KostModel(
-                1,
-                "Maharaja",
-                "AC, WiFi, Bathroom",
-                1450000,
-                "The best boarding",
-                -6.2000809,
-                106.7833355,
-                R.drawable.kost2)
-        );
-
-        kostArrayList.add(new KostModel(
-                2,
-                "Haji Indra",
-                "AC, WiFi",
-                1900000,
-                "The cheapest boarding",
-                -6.2261741,
-                106.9078293,
-                R.drawable.kost3)
-        );
-
-        dataStore.setKostArrayList(kostArrayList);
+//        kostArrayList.add(new KostModel(
+//                1,
+//                "Maharaja",
+//                "AC, WiFi, Bathroom",
+//                1450000,
+//                "The best boarding",
+//                -6.2000809,
+//                106.7833355,
+//                R.drawable.kost2)
+//        );
+//
+//        kostArrayList.add(new KostModel(
+//                2,
+//                "Haji Indra",
+//                "AC, WiFi",
+//                1900000,
+//                "The cheapest boarding",
+//                -6.2261741,
+//                106.9078293,
+//                R.drawable.kost3)
+//        );
 
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rvKosts);
