@@ -1,9 +1,11 @@
 package id.stanley.binus.bluejackkos.views;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -189,6 +191,12 @@ public class MainActivity extends AppCompatActivity implements KostRecyclerViewA
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.logout:
+                // clear user
+                SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString("loggedInUser", "null");
+                editor.apply();
+
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 finish();
                 return true;

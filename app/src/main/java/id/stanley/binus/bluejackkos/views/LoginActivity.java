@@ -4,16 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 import id.stanley.binus.bluejackkos.R;
+import id.stanley.binus.bluejackkos.models.KostModel;
 import id.stanley.binus.bluejackkos.models.UserModel;
 import id.stanley.binus.bluejackkos.utils.DataStore;
 import id.stanley.binus.bluejackkos.utils.SendSMS;
@@ -32,12 +36,28 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Gson gson = new Gson();
+
         textSignUp = findViewById(R.id.textSignUp);
         toolbar = findViewById(R.id.toolbar);
         toolbarTitle = findViewById(R.id.titleText);
         usernameTextField = findViewById(R.id.usernameTextField);
         passwordTextField = findViewById(R.id.passwordTextField);
         loginButton = findViewById(R.id.loginButton);
+
+        SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(this);
+        String currentUserJson = mSettings.getString("loggedInUser", "null");
+
+        if (!currentUserJson.equals("null")) {
+            UserModel userModel = gson.fromJson(currentUserJson, UserModel.class);
+
+            // login successful
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class)
+                    .putExtra("userId", userModel.getUserId())
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        }
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -62,6 +82,10 @@ public class LoginActivity extends AppCompatActivity {
                            UserModel userModel = (UserModel) usersData.get(x);
                            if (userModel.getUsername().toLowerCase().equals(username) && userModel.getPassword().equals(password)) {
                                // login successful
+                               SharedPreferences.Editor editor = mSettings.edit();
+                               editor.putString("loggedInUser", gson.toJson(userModel));
+                               editor.apply();
+
                                Intent intent = new Intent(LoginActivity.this, MainActivity.class)
                                        .putExtra("userId", userModel.getUserId())
                                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
