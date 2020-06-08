@@ -42,4 +42,5 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="phone_length_error">Phone number must be 10-12 characters long.</string>
+    <string name="view_location_kost">View Location Kost</string>
 </resources>
