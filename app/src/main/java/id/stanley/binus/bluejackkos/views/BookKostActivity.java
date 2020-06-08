@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -115,7 +116,7 @@ public class BookKostActivity extends AppCompatActivity {
                     int kostPrice = finalCurrentKost.getKostPrice();
                     double kostLat = finalCurrentKost.getKostLatitude();
                     double kostLon = finalCurrentKost.getKostLongitude();
-                    int kostImage = finalCurrentKost.getKostImage();
+                    Bitmap kostImage = finalCurrentKost.getKostImage();
 
                     // verify date
                     if (bookingDate.isEmpty()) {
