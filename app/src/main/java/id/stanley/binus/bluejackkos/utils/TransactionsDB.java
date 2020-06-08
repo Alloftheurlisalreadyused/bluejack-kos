@@ -74,7 +74,7 @@ public class TransactionsDB {
 
     public void insertTransaction(TransactionModel product) {
         ContentValues cv = new ContentValues();
-        cv.put(DatabaseHelper.FIELD_BOOKING_ID, product.getUserId());
+        cv.put(DatabaseHelper.FIELD_BOOKING_ID, product.getBookingId());
         cv.put("userId", product.getUserId());
         cv.put(DatabaseHelper.FIELD_BOOKING_KOST_NAME, product.getKostName());
         cv.put(DatabaseHelper.FIELD_BOOKING_KOST_FACILITY, product.getKostFacility());
