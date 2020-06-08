@@ -58,13 +58,6 @@ public class KostDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(KostDetailActivity.this,MapsActivity.class));
-            }
-        });
         
         Intent intent = getIntent();
         
@@ -77,7 +70,18 @@ public class KostDetailActivity extends AppCompatActivity {
         String selectedKost = intent.getStringExtra("selectedKost");
         Gson gson = new Gson();
         KostModel currentKost = gson.fromJson(selectedKost, KostModel.class);
-        
+
+
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mapsIntent = new Intent(KostDetailActivity.this, MapsActivity.class);
+                String myJson = gson.toJson(currentKost);
+                mapsIntent.putExtra("selectedKost", myJson);
+                startActivity(mapsIntent);
+            }
+        });
+
         if (currentKost == null) finish();
         else {
             // set data
