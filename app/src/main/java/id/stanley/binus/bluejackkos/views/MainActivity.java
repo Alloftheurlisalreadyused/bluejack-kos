@@ -1,12 +1,15 @@
 package id.stanley.binus.bluejackkos.views;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +23,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,17 +84,37 @@ public class MainActivity extends AppCompatActivity implements KostRecyclerViewA
                         for (int x = 0; x < jsonArray.length(); ++x) {
                             JSONObject kostObject = jsonArray.getJSONObject(x);
 
-                            KostModel kost = new KostModel(
-                                    kostObject.getInt("id"),
-                                    kostObject.getString("name"),
-                                    kostObject.getString("facilities"),
-                                    kostObject.getInt("price"),
-                                    kostObject.getString("address"),
-                                    kostObject.getDouble("LNG"),
-                                    kostObject.getDouble("LAT"),
-                                    R.drawable.kost2);
+                            Glide.with(this)
+                                    .asBitmap()
+                                    .load(kostObject.getString("image"))
+                                    .into(new CustomTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                            try {
+                                                KostModel kost = new KostModel(
+                                                        kostObject.getInt("id"),
+                                                        kostObject.getString("name"),
+                                                        kostObject.getString("facilities"),
+                                                        kostObject.getInt("price"),
+                                                        kostObject.getString("address"),
+                                                        kostObject.getDouble("LNG"),
+                                                        kostObject.getDouble("LAT"),
+                                                        resource);
 
-                            kostArrayList.add(kost);
+                                                kostArrayList.add(kost);
+
+                                                adapter.notifyDataSetChanged();
+
+                                            } catch (JSONException e) {
+                                                Log.e("MainActivity", e.getMessage());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                                        }
+                                    });
                         }
 
                     } catch (JSONException e) {
