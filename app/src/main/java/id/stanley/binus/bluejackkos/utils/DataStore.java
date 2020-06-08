@@ -1,5 +1,7 @@
 package id.stanley.binus.bluejackkos.utils;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 import id.stanley.binus.bluejackkos.models.KostModel;
@@ -7,27 +9,22 @@ import id.stanley.binus.bluejackkos.models.TransactionModel;
 import id.stanley.binus.bluejackkos.models.UserModel;
 
 public class DataStore {
-    private static DataStore instance;
+//    private static DataStore instance;
+    private Context ctx;
 
-    private ArrayList<UserModel> usersArrayList = new ArrayList<>();
     private ArrayList<KostModel> kostArrayList = new ArrayList<>();
     private ArrayList<TransactionModel> transactionsArrayList = new ArrayList<>();
 
-    private DataStore() {}
-
-    public static synchronized DataStore getInstance(){
-        if(instance==null){
-            instance=new DataStore();
-        }
-        return instance;
-    }
+    public DataStore(Context ctx) { this.ctx = ctx; }
 
     public ArrayList<UserModel> getUsersArrayList() {
-        return usersArrayList;
+        UsersDB usersDB = new UsersDB(ctx);
+        return usersDB.getAllUsers();
     }
 
-    public void setUsersArrayList(ArrayList<UserModel> usersArrayList) {
-        this.usersArrayList = usersArrayList;
+    public void insertUser(UserModel user) {
+        UsersDB usersDB = new UsersDB(ctx);
+        usersDB.insertUser(user);
     }
 
     public ArrayList<KostModel> getKostArrayList() {

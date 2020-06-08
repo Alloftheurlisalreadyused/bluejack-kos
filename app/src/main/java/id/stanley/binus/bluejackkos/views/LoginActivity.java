@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(view -> {
            if(validateInput()) {
                // validation passed, proceed to login
-               DataStore dataStore = DataStore.getInstance();
+               DataStore dataStore = new DataStore(this);
                ArrayList usersData = dataStore.getUsersArrayList();
 
                String username = usernameTextField.getText().toString().toLowerCase();

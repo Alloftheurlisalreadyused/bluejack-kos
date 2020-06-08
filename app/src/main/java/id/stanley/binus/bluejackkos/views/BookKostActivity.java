@@ -27,7 +27,7 @@ public class BookKostActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView toolbarTitle;
-    private DataStore dataStore = DataStore.getInstance();
+    private DataStore dataStore = new DataStore(this);
     private TextView bookingMessage;
     private EditText dateTextField;
     private DatePickerDialog picker;

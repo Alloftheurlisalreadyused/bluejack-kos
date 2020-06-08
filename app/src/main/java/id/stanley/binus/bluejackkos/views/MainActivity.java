@@ -34,16 +34,18 @@ import id.stanley.binus.bluejackkos.utils.DataStore;
 
 public class MainActivity extends AppCompatActivity implements KostRecyclerViewAdapter.ItemClickListener{
 
-    private DataStore dataStore = DataStore.getInstance();
     private KostRecyclerViewAdapter adapter;
     private Toolbar toolbar;
     private String userId;
     private String API_URL = "https://raw.githubusercontent.com/dnzrx/SLC-REPO/master/MOBI6006/E202-MOBI6006-KR01-00.json";
+    private ArrayList<KostModel> kostArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        kostArrayList = new ArrayList<>();
 
         toolbar = findViewById(R.id.toolbar);
 
@@ -66,8 +68,6 @@ public class MainActivity extends AppCompatActivity implements KostRecyclerViewA
         StringRequest stringRequest = new StringRequest(Request.Method.GET, API_URL,
                 response -> {
                     Log.d("MainActivity", response);
-
-                    ArrayList<KostModel> kostArrayList = dataStore.getKostArrayList();
 
                     // remove data
                     kostArrayList.clear();
@@ -94,9 +94,6 @@ public class MainActivity extends AppCompatActivity implements KostRecyclerViewA
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-                    // set ArrayList to RecyclerView
-                    dataStore.setKostArrayList(kostArrayList);
 
                 }, error -> {
                     Log.e("MainActivity", "Error " + error);
@@ -135,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements KostRecyclerViewA
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new KostRecyclerViewAdapter(this, dataStore.getKostArrayList());
+        adapter = new KostRecyclerViewAdapter(this, kostArrayList);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
@@ -144,10 +141,10 @@ public class MainActivity extends AppCompatActivity implements KostRecyclerViewA
     @Override
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(MainActivity.this, KostDetailActivity.class)
-                .putExtra("kostId", dataStore.getKostArrayList().get(position).getKostId())
+                .putExtra("kostId", kostArrayList.get(position).getKostId())
                 .putExtra("userId", userId);
 
-        Log.d("KOST1", String.valueOf(dataStore.getKostArrayList().get(position).getKostId()));
+        Log.d("KOST1", String.valueOf(kostArrayList.get(position).getKostId()));
 
         startActivity(intent);
     }

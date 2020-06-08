@@ -44,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        DataStore dataStore = DataStore.getInstance();
+        DataStore dataStore = new DataStore(this);
 
         toolbarTitle = findViewById(R.id.titleText);
         dobTextField = findViewById(R.id.dobTextField);
@@ -88,9 +88,11 @@ public class SignUpActivity extends AppCompatActivity {
                 UserModel userModel = new UserModel(userId, username, password, phone, gender, dob);
                 Log.d("CAT", userModel.getUserId() + userModel.getPassword());
 
-                usersArrayList.add(userModel);
+//                usersArrayList.add(userModel);
+//
+//                dataStore.setUsersArrayList(usersArrayList);
 
-                dataStore.setUsersArrayList(usersArrayList);
+                dataStore.insertUser(userModel);
 
                 Toast.makeText(this, getString(R.string.sign_up_successful), Toast.LENGTH_LONG).show();
 
@@ -110,7 +112,7 @@ public class SignUpActivity extends AppCompatActivity {
         String phone = phoneTextField.getText().toString();
         Boolean tosChecked = tosCheckbox.isChecked();
         Boolean valid = true;
-        DataStore dataStore = DataStore.getInstance();
+        DataStore dataStore = new DataStore(this);
         ArrayList<UserModel> usersArrayList = dataStore.getUsersArrayList();
 
         // reset errors
