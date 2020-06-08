@@ -44,7 +44,7 @@ public class BookingTransactionRecyclerViewAdapter extends RecyclerView.Adapter<
         String kostName = mKostData.get(position).getKostName();
         int kostPrice = mKostData.get(position).getKostPrice();
         String kostFacilities = mKostData.get(position).getBookingDate();
-        ImageView kostImage = mKostData.get(position).getKostImage();
+        int kostImage = mKostData.get(position).getKostImage();
 
         DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
@@ -58,7 +58,7 @@ public class BookingTransactionRecyclerViewAdapter extends RecyclerView.Adapter<
         holder.kostName.setText(kostName);
         holder.kostFacility.setText(kostFacilities);
         holder.kostPrice.setText(kursIndonesia.format(kostPrice));
-
+        holder.kostImage.setImageResource(kostImage);
     }
 
     // total number of rows

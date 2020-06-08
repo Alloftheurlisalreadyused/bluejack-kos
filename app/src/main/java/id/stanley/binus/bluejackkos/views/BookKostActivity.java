@@ -9,11 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -117,9 +115,7 @@ public class BookKostActivity extends AppCompatActivity {
                     int kostPrice = finalCurrentKost.getKostPrice();
                     double kostLat = finalCurrentKost.getKostLatitude();
                     double kostLon = finalCurrentKost.getKostLongitude();
-                    ImageView kostImage = null;
-
-                    Glide.with(this).load(finalCurrentKost.getKostImage()).into(kostImage);
+                    int kostImage = finalCurrentKost.getKostImage();
 
                     // verify date
                     if (bookingDate.isEmpty()) {

@@ -1,16 +1,8 @@
 package id.stanley.binus.bluejackkos.models;
 
-import android.app.Activity;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
-
-import id.stanley.binus.bluejackkos.views.BookingTransactionsActivity;
-
 public class TransactionModel {
     private String bookingId;
     private String userId;
-    private Object BookingTransactionsActivity;
 
     public String getBookingId() {
         return bookingId;
@@ -76,7 +68,7 @@ public class TransactionModel {
         this.bookingDate = bookingDate;
     }
 
-    public TransactionModel(String bookingId, String userId, String kostName, String kostFacility, int kostPrice, double kostLat, double kostLon, String bookingDate, ImageView kostImage) {
+    public TransactionModel(String bookingId, String userId, String kostName, String kostFacility, int kostPrice, double kostLat, double kostLon, String bookingDate, int kostImage) {
         this.bookingId = bookingId;
         this.userId = userId;
         this.kostName = kostName;
@@ -94,14 +86,13 @@ public class TransactionModel {
     private double kostLat;
     private double kostLon;
     private String bookingDate;
-    private ImageView kostImage;
-    private String kostImageUrl;
+    private int kostImage;
 
-    public ImageView getKostImage() {
+    public int getKostImage() {
         return kostImage;
     }
 
-    public void setKostImage(ImageView kostImage) {
-        Glide.with((Activity) BookingTransactionsActivity).load(kostImageUrl).into(kostImage);
+    public void setKostImage(int kostImage) {
+        this.kostImage = kostImage;
     }
 }

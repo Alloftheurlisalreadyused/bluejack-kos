@@ -30,7 +30,7 @@ public class KostRecyclerViewAdapter extends RecyclerView.Adapter<KostRecyclerVi
         this.mKostData = kostData;
     }
 
-        // inflates the row layout from xml when needed
+    // inflates the row layout from xml when needed
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,7 +44,7 @@ public class KostRecyclerViewAdapter extends RecyclerView.Adapter<KostRecyclerVi
         String kostName = mKostData.get(position).getKostName();
         int kostPrice = mKostData.get(position).getKostPrice();
         String kostFacilities = mKostData.get(position).getKostFacility();
-        String kostImage = mKostData.get(position).getKostImage();
+        int kostImage = mKostData.get(position).getKostImage();
 
         DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
@@ -58,7 +58,7 @@ public class KostRecyclerViewAdapter extends RecyclerView.Adapter<KostRecyclerVi
         holder.kostName.setText(kostName);
         holder.kostFacility.setText(kostFacilities);
         holder.kostPrice.setText(kursIndonesia.format(kostPrice));
-
+        holder.kostImage.setImageResource(kostImage);
     }
 
     // total number of rows
