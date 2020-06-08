@@ -22,7 +22,7 @@ import id.stanley.binus.bluejackkos.utils.DataStore;
 
 public class KostDetailActivity extends AppCompatActivity {
     
-    private DataStore dataStore = DataStore.getInstance();
+    private DataStore dataStore = new DataStore(this);
     private ImageView kostImage;
     private TextView kostName;
     private TextView kostFacility;

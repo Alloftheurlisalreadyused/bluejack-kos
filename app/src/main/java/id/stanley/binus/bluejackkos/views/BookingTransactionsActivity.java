@@ -23,7 +23,7 @@ import id.stanley.binus.bluejackkos.utils.DataStore;
 
 public class BookingTransactionsActivity extends AppCompatActivity implements BookingTransactionRecyclerViewAdapter.ItemClickListener {
 
-    private DataStore dataStore = DataStore.getInstance();
+    private DataStore dataStore = new DataStore(this);
     private BookingTransactionRecyclerViewAdapter adapter;
     private Toolbar toolbar;
     private TextView toolbarTitle;
