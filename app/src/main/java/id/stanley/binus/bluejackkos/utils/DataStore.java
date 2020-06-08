@@ -12,9 +12,6 @@ public class DataStore {
 //    private static DataStore instance;
     private Context ctx;
 
-    private ArrayList<KostModel> kostArrayList = new ArrayList<>();
-    private ArrayList<TransactionModel> transactionsArrayList = new ArrayList<>();
-
     public DataStore(Context ctx) { this.ctx = ctx; }
 
     public ArrayList<UserModel> getUsersArrayList() {
@@ -27,19 +24,13 @@ public class DataStore {
         usersDB.insertUser(user);
     }
 
-    public ArrayList<KostModel> getKostArrayList() {
-        return kostArrayList;
-    }
-
-    public void setKostArrayList(ArrayList<KostModel> kostArrayList) {
-        this.kostArrayList = kostArrayList;
-    }
-
     public ArrayList<TransactionModel> getTransactionsArrayList() {
-        return transactionsArrayList;
+        TransactionsDB transactionsDB = new TransactionsDB(ctx);
+        return transactionsDB.getAllTransactions();
     }
 
-    public void setTransactionsArrayList(ArrayList<TransactionModel> transactionsArrayList) {
-        this.transactionsArrayList = transactionsArrayList;
+    public void insertTransaction(TransactionModel newTransaction) {
+        TransactionsDB transactionsDB = new TransactionsDB(ctx);
+        transactionsDB.insertTransaction(newTransaction);
     }
 }

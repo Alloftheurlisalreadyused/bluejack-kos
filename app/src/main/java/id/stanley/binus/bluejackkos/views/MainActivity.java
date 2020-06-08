@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,11 +59,6 @@ public class MainActivity extends AppCompatActivity implements KostRecyclerViewA
 
         Intent intent = getIntent();
         userId = intent.getStringExtra("userId");
-
-        if (userId == null) {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();
-        }
 
         // fetch data from API
         // Instantiate the RequestQueue.
@@ -124,9 +120,13 @@ public class MainActivity extends AppCompatActivity implements KostRecyclerViewA
 
         });
 
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-
+        if (userId == null) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+        } else {
+            // Add the request to the RequestQueue.
+            queue.add(stringRequest);
+        }
 
         // insert data
 //        kostArrayList.add(new KostModel(
@@ -164,9 +164,13 @@ public class MainActivity extends AppCompatActivity implements KostRecyclerViewA
 
     @Override
     public void onItemClick(View view, int position) {
+        Gson gson = new Gson();
+        String myJson = gson.toJson(kostArrayList.get(position));
+
         Intent intent = new Intent(MainActivity.this, KostDetailActivity.class)
                 .putExtra("kostId", kostArrayList.get(position).getKostId())
-                .putExtra("userId", userId);
+                .putExtra("userId", userId)
+                .putExtra("selectedKost", myJson);
 
         Log.d("KOST1", String.valueOf(kostArrayList.get(position).getKostId()));
 

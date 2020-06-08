@@ -70,7 +70,7 @@ public class TransactionModel {
         this.bookingDate = bookingDate;
     }
 
-    public TransactionModel(String bookingId, String userId, String kostName, String kostFacility, int kostPrice, double kostLat, double kostLon, String bookingDate, Bitmap kostImage) {
+    public TransactionModel(String bookingId, String userId, String kostName, String kostFacility, int kostPrice, double kostLat, double kostLon, String bookingDate) {
         this.bookingId = bookingId;
         this.userId = userId;
         this.kostName = kostName;
@@ -79,7 +79,6 @@ public class TransactionModel {
         this.kostLat = kostLat;
         this.kostLon = kostLon;
         this.bookingDate = bookingDate;
-        this.kostImage = kostImage;
     }
 
     private String kostName;
@@ -88,13 +87,4 @@ public class TransactionModel {
     private double kostLat;
     private double kostLon;
     private String bookingDate;
-    private Bitmap kostImage;
-
-    public Bitmap getKostImage() {
-        return kostImage;
-    }
-
-    public void setKostImage(Bitmap kostImage) {
-        this.kostImage = kostImage;
-    }
 }

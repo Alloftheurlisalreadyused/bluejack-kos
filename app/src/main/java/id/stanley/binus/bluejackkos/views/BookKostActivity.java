@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,6 +24,7 @@ import id.stanley.binus.bluejackkos.models.KostModel;
 import id.stanley.binus.bluejackkos.models.TransactionModel;
 import id.stanley.binus.bluejackkos.models.UserModel;
 import id.stanley.binus.bluejackkos.utils.DataStore;
+import id.stanley.binus.bluejackkos.utils.TransactionsDB;
 
 public class BookKostActivity extends AppCompatActivity {
 
@@ -66,19 +68,14 @@ public class BookKostActivity extends AppCompatActivity {
 
         int kostId = intent.getIntExtra("kostId", 0);
         String userId = intent.getStringExtra("userId");
+        String selectedKost = intent.getStringExtra("selectedKost");
+
+        Gson gson = new Gson();
+        Log.d("test", selectedKost);
+
+        KostModel currentKost = gson.fromJson(selectedKost, KostModel.class);
 
         if (kostId == 0) finish();
-
-        ArrayList<KostModel> kosts = dataStore.getKostArrayList();
-        KostModel currentKost = null;
-
-        for (int x = 0; x<kosts.size(); ++x) {
-            if (kosts.get(x).getKostId() == kostId) {
-                currentKost = kosts.get(x);
-                Log.d("KOST3", String.valueOf(kostId));
-                break;
-            }
-        }
 
         if (currentKost != null && userId != null) {
             ArrayList<UserModel> users = dataStore.getUsersArrayList();
@@ -106,10 +103,12 @@ public class BookKostActivity extends AppCompatActivity {
             if (currentUser != null) {
                 bookingMessage.setText(getString(R.string.booking_message, currentUser.getUsername(), currentKost.getKostName()));
 
+                TransactionsDB transactionsDB = new TransactionsDB(this);
+
                 // button onclick
                 KostModel finalCurrentKost = currentKost;
                 button.setOnClickListener(v -> {
-                    String bookingId = "BK" + String.format("%03d", kosts.size() + 1);
+                    String bookingId = "BK" + String.format("%03d", transactionsDB.getAllTransactions().size() + 1);
                     String bookingDate = dateTextField.getText().toString();
                     String kostName = finalCurrentKost.getKostName();
                     String kostFacility = finalCurrentKost.getKostFacility();
@@ -126,11 +125,11 @@ public class BookKostActivity extends AppCompatActivity {
                     }
 
                     // generate new data
-                    TransactionModel newTransaction = new TransactionModel(bookingId, userId, kostName, kostFacility, kostPrice, kostLat, kostLon, bookingDate, kostImage);
+                    TransactionModel newTransaction = new TransactionModel(bookingId, userId, kostName, kostFacility, kostPrice, kostLat, kostLon, bookingDate);
 
                     // add to array
-                    transactions.add(newTransaction);
-                    dataStore.setTransactionsArrayList(transactions);
+//                    transactions.add(newTransaction);
+                    dataStore.insertTransaction(newTransaction);
 
                     Toast.makeText(this, getString(R.string.book_done), Toast.LENGTH_LONG).show();
                     finish();

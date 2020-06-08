@@ -20,6 +20,7 @@ import id.stanley.binus.bluejackkos.adapters.BookingTransactionRecyclerViewAdapt
 import id.stanley.binus.bluejackkos.adapters.KostRecyclerViewAdapter;
 import id.stanley.binus.bluejackkos.models.TransactionModel;
 import id.stanley.binus.bluejackkos.utils.DataStore;
+import id.stanley.binus.bluejackkos.utils.TransactionsDB;
 
 public class BookingTransactionsActivity extends AppCompatActivity implements BookingTransactionRecyclerViewAdapter.ItemClickListener {
 
@@ -27,6 +28,7 @@ public class BookingTransactionsActivity extends AppCompatActivity implements Bo
     private BookingTransactionRecyclerViewAdapter adapter;
     private Toolbar toolbar;
     private TextView toolbarTitle;
+    private ArrayList<TransactionModel> list = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class BookingTransactionsActivity extends AppCompatActivity implements Bo
         setContentView(R.layout.activity_booking_transactions);
         toolbar = findViewById(R.id.toolbar);
         toolbarTitle = findViewById(R.id.titleText);
+
+        list = dataStore.getTransactionsArrayList();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -45,11 +49,11 @@ public class BookingTransactionsActivity extends AppCompatActivity implements Bo
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new BookingTransactionRecyclerViewAdapter(this, dataStore.getTransactionsArrayList());
+        adapter = new BookingTransactionRecyclerViewAdapter(this, list);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
-        if (dataStore.getTransactionsArrayList().size() == 0) {
+        if (list.size() == 0) {
             Toast.makeText(this, getString(R.string.no_transactions), Toast.LENGTH_LONG).show();
         }
     }
@@ -61,9 +65,16 @@ public class BookingTransactionsActivity extends AppCompatActivity implements Bo
                 .setMessage(getString(R.string.really_cancel))
 
                 .setPositiveButton(R.string.yes, (dialog, whichButton) -> {
-                    ArrayList<TransactionModel> transactionModels = dataStore.getTransactionsArrayList();
-                    transactionModels.remove(position);
-                    adapter.notifyDataSetChanged();
+                    for (int x=0; x<list.size(); ++x) {
+                        if (x == position) {
+                            TransactionsDB transactionsDB = new TransactionsDB(this);
+                            transactionsDB.removeTransaction(list.get(x).getBookingId());
+                            list.remove(position);
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(this, "Booking cancelled", Toast.LENGTH_LONG).show();
+                            break;
+                        }
+                    }
                     dialog.dismiss();
                 })
                 .setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss())

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -62,16 +63,10 @@ public class KostDetailActivity extends AppCompatActivity {
         
         if (kostId == 0) finish();
 
-        ArrayList<KostModel> kosts = dataStore.getKostArrayList();
-        KostModel currentKost = null;
-        
-        for (int x = 0; x<kosts.size(); ++x) {
-            if (kosts.get(x).getKostId() == kostId) {
-                currentKost = kosts.get(x);
-                Log.d("KOST2", String.valueOf(kostId));
-                break;
-            }
-        }
+
+        String selectedKost = intent.getStringExtra("selectedKost");
+        Gson gson = new Gson();
+        KostModel currentKost = gson.fromJson(selectedKost, KostModel.class);
         
         if (currentKost == null) finish();
         else {
@@ -96,9 +91,12 @@ public class KostDetailActivity extends AppCompatActivity {
 
             KostModel finalCurrentKost = currentKost;
             bookButton.setOnClickListener(view -> {
+                String myJson = gson.toJson(finalCurrentKost);
+
                 Intent bookIntent = new Intent(KostDetailActivity.this, BookKostActivity.class);
                 bookIntent.putExtra("kostId", finalCurrentKost.getKostId());
                 bookIntent.putExtra("userId", userId);
+                bookIntent.putExtra("selectedKost", myJson);
 
                 startActivity(bookIntent);
             });
